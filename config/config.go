@@ -38,9 +38,9 @@ func InitializeAppConfig() {
 
 	AppConfig.DBHost = viper.GetString("DB_HOST")
 	AppConfig.DBPort = viper.GetInt("DB_PORT")
-	AppConfig.DBDatabase = viper.GetString("DB_DATABASE")
-	AppConfig.DBUsername = viper.GetString("DB_USERNAME")
-	AppConfig.DBPassword = viper.GetString("DB_PASSWORD")
+	AppConfig.DBDatabase = viper.GetString("POSTGRES_DB")
+	AppConfig.DBUsername = viper.GetString("POSTGRES_USER")
+	AppConfig.DBPassword = viper.GetString("POSTGRES_PASSWORD")
 
 	AppConfig.JWTSecret = viper.GetString("JWT_SECRET")
 

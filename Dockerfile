@@ -1,10 +1,13 @@
-FROM daystram/go-builder:1.16 as builder
-WORKDIR /build
-COPY . ./
-RUN go mod tidy
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o app .
+FROM golang:1.14-alpine AS builder
+ 
+WORKDIR /srv/go-app
+ADD . .
+RUN go build -o arctic-fox
 
-FROM alpine:latest
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-COPY --from=builder /build/app ./
-ENTRYPOINT ["/app"]
+
+FROM debian:buster
+WORKDIR /srv/go-app
+COPY --from=builder /srv/go-app/config.json .
+COPY --from=builder /srv/go-app/arctic-fox .
+
+CMD ["./arctic-fox"]
